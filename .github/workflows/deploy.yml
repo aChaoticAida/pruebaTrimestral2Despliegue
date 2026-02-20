@@ -1,36 +1,34 @@
-name: Despliegue Examen
+name: Despliegue Examen Aida
 
 on:
   push:
     branches:
-      - main  # Esto hace que se active al hacer push
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout del código
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Configurar Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Instalar y Compilar
-        # Importante: Entramos en la carpeta donde está el package.json de Angular
+      - name: Install and Build
         run: |
           cd api-series
           npm install
           npx ng build --configuration production
 
-      - name: Enviar al Servidor (VPS)
+      - name: Deploy to VPS
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          # Ajustamos la ruta según donde Angular deje los archivos (suele ser dist/api-series/browser)
           source: "api-series/dist/*/browser/*"
           target: ${{ secrets.VPS_PATH }}
           strip_components: 4
