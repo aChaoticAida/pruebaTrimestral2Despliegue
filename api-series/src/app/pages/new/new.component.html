@@ -1,0 +1,32 @@
+<div style="padding: 20px;">
+  <h2>Añadir Nueva Serie</h2>
+  
+  <form [formGroup]="formulario" (ngSubmit)="enviarFormulario()">
+    
+    <div style="margin-bottom: 10px;">
+      <label>Título:</label><br>
+      <input type="text" formControlName="title">
+      @if (formulario.get('title')?.invalid && formulario.get('title')?.touched) {
+        <p style="color: red; margin: 0;">El título debe tener al menos 3 letras.</p>
+      }
+    </div>
+
+    <div style="margin-bottom: 10px;">
+      <label>Canal:</label><br>
+      <input type="text" formControlName="channel">
+    </div>
+
+    <div style="margin-bottom: 10px;">
+      <label>Nota (0-10):</label><br>
+      <input type="number" formControlName="rating">
+      @if (formulario.get('rating')?.invalid && formulario.get('rating')?.touched) {
+        <p style="color: red; margin: 0;">La nota debe ser entre 0 y 10.</p>
+      }
+    </div>
+
+    <button type="submit" [disabled]="formulario.invalid" style="padding: 10px 20px; cursor: pointer;">
+      Guardar Serie
+    </button>
+
+  </form>
+</div>

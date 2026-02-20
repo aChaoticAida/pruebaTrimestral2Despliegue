@@ -1,0 +1,14 @@
+<h2>Listado de Series</h2>
+<div class="lista-series">
+  <ul>
+    @for (serie of arrSeries; track serie._id) {
+      <li>
+        <h3>{{ serie.title }}</h3>
+        <p>Canal: {{ serie.channel }}</p>
+        <p>Nota: {{ serie.rating }}</p>
+      </li>
+    } @empty {
+      <p>Cargando series...</p>
+    }
+  </ul>
+</div>
